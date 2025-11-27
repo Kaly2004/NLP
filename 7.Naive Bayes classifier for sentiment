@@ -1,0 +1,21 @@
+import nltk
+from nltk.corpus import movie_reviews
+import random
+nltk.download('movie_reviews')
+documents = [(list(movie_reviews.words(fileid)), category)
+             for category in movie_reviews.categories()
+             for fileid in movie_reviews.fileids(category)]
+random.shuffle(documents)
+word_features = list(nltk.FreqDist(w.lower() for w in movie_reviews.words()))[:2000]
+featuresets = [({f'contains({w})': w in set(d) for w in word_features}, c) for d,c in documents]
+classifier = nltk.NaiveBayesClassifier.train(featuresets[100:])
+accuracy = nltk.classify.accuracy(classifier, featuresets[:100])
+print(f"Accuracy: {accuracy:.1%}")
+classifier.show_most_informative_features(5)
+test_sentence = "This movie was terrible, with worst acting!"
+print(f"\nTest: '{test_sentence}'")
+print(f"Sentiment: {classifier.classify({f'contains({w})': w in test_sentence.split() for w in word_features})}")
+
+
+
+
