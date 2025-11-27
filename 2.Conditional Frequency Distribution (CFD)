@@ -1,0 +1,25 @@
+import nltk
+from nltk.probability import ConditionalFreqDist
+nltk.download('punkt', quiet=True)
+docs = {'sport': "Football match and team", 'tech': "Computer science and AI"}
+pairs = []
+for label, text in docs.items():
+    tokens = [t.lower() for t in nltk.word_tokenize(text) if t.isalpha()]
+    for tok in tokens:
+        pairs.append((label, tok))
+cfd = ConditionalFreqDist(pairs)
+for label in cfd.conditions():
+    print(label, cfd[label].most_common(3))
+
+
+
+
+
+
+
+
+
+output:
+sport [('and', 1), ('football', 1), ('match', 1)]
+tech [('and', 1), ('computer', 1), ('science', 1)]
+
