@@ -1,0 +1,15 @@
+import nltk
+from collections import Counter
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
+text = "This is a sample text. This text is simple and simple."
+tokens = [t.lower() for t in nltk.word_tokenize(text) if t.isalpha()]
+freq = Counter(tokens)
+print("Top words:", freq.most_common(5))
+
+
+
+
+
+output:
+Top words: [('simple', 2), ('this', 2), ('text', 2), ('is', 2), ('a', 1)]
