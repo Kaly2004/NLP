@@ -1,0 +1,23 @@
+import nltk
+nltk.download('punkt', quiet=True)
+nltk.download('averaged_perceptron_tagger', quiet=True)
+nltk.download('averaged_perceptron_tagger_eng', quiet=True)
+nltk.download('punkt_tab', quiet=True)
+sent = "President of India Ram Nath Kovind visited the university"
+tokens = nltk.word_tokenize(sent)
+tags = nltk.pos_tag(tokens)
+grammar = r"""
+  NP: {<DT>?<NN.*>+}     
+  PP: {<IN><NP>}         
+"""
+cp = nltk.RegexpParser(grammar)
+tree = cp.parse(tags)
+print("Full parsed tree:")
+tree.pretty_print()
+print("\nIdentified PPs:")
+for subtree in tree.subtrees():
+    if subtree.label() == 'PP':
+        print("PP:", ' '.join(w for w, t in subtree.leaves()))
+
+
+
