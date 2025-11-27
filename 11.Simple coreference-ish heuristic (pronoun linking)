@@ -1,0 +1,17 @@
+import nltk
+nltk.download('punkt', quiet=True); nltk.download('averaged_perceptron_tagger', quiet=True)
+text = "Mary went home. She cooked dinner. John said he would join."
+tokens = nltk.word_tokenize(text)
+tags = nltk.pos_tag(tokens)
+last_proper = None
+for w,t in tags:
+    if t == 'NNP':
+        last_proper = w
+    if w.lower() in ('he','she','they'):
+        print(f"Pronoun {w} -> refers to {last_proper}")
+
+
+Output:
+
+Pronoun She -> refers to Mary
+Pronoun he -> refers to John
