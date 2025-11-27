@@ -1,0 +1,18 @@
+import nltk, string
+nltk.download('reuters', quiet=True); nltk.download('stopwords', quiet=True); nltk.download('punkt', quiet=True)
+from nltk.corpus import reuters, stopwords
+stops = set(stopwords.words('english'))
+docids = reuters.fileids()[:2]
+lines = []
+for fid in docids:
+    raw = reuters.raw(fid)
+    toks = [t.lower() for t in nltk.word_tokenize(raw) if t.isalpha() and t.lower() not in stops]
+    lines.append(' '.join(toks[:30]))
+print("Sample cleaned:", lines[0])
+
+
+
+Output:
+ Sample cleaned: asian exporters fear damage rift mounting trade friction japan raised fears among many asia exporting nations row could inflict economic damage businessmen officials said told reuter correspondents asian capitals move
+
+
