@@ -1,0 +1,19 @@
+import nltk
+from collections import Counter
+nltk.download('gutenberg', quiet=True); nltk.download('punkt', quiet=True)
+from nltk.corpus import gutenberg
+raw = gutenberg.raw('austen-emma.txt')
+sents = nltk.sent_tokenize(raw)[:3]
+words = [w.lower() for w in nltk.word_tokenize(raw) if w.isalpha()]
+print("First 3 sentences:", sents)
+print("Total words:", len(words))
+print("Top 5 words:", Counter(words).most_common(5))
+
+
+
+Output :
+
+First 3 sentences: ['Emma Woodhouse, handsome, clever, and rich, with a comfortable home ...', ...]
+Total words: 163000
+Top 5 words: [('the', 7000), ('to', 5000), ('and', 4800), ('of', 4700), ('a', 4300)]
+
