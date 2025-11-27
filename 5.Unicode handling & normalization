@@ -1,0 +1,18 @@
+import unicodedata
+s = "Café — naïve coöperate"
+n1 = unicodedata.normalize('NFC', s)
+n2 = ''.join(ch for ch in unicodedata.normalize('NFKD', s) if not unicodedata.combining(ch))
+print("Original:", s)
+print("NFC:", n1)
+print("NFKD stripped accents:", n2.lower())
+
+
+
+Output:
+
+Original: Café — naïve coöperate
+NFC: Café — naïve coöperate
+NFKD stripped accents: cafe — naive cooperate
+
+
+
