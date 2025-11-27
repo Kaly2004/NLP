@@ -1,0 +1,23 @@
+import nltk
+from nltk.corpus import brown
+from nltk.tag import UnigramTagger, BigramTagger, DefaultTagger
+nltk.download('brown', quiet=True)
+nltk.download('universal_tagset', quiet=True)
+sentences = brown.tagged_sents(tagset='universal')
+train_size = int(len(sentences) * 0.8)
+train_sents = sentences[:train_size]
+test_sents = sentences[train_size:]
+default_tagger = DefaultTagger('NOUN')
+unigram_tagger = UnigramTagger(train_sents, backoff=default_tagger)bigram_tagger = BigramTagger(train_sents, backoff=unigram_tagger)
+unigram_acc = unigram_tagger.evaluate(test_sents)
+bigram_acc = bigram_tagger.evaluate(test_sents)
+print("Unigram Tagger Accuracy:", round(unigram_acc, 4))
+print("Bigram Tagger Accuracy :", round(bigram_acc, 4))
+text = "The quick brown fox jumps over the lazy dog"
+tokens = nltk.word_tokenize(text)
+print("\nSample Sentence:", text)
+print("Unigram Tagger Output:", unigram_tagger.tag(tokens))
+print("Bigram Tagger Output :", bigram_tagger.tag(tokens))
+
+
+Output:
